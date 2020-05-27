@@ -3,19 +3,19 @@
 
     <item android:id="@+id/navigation_location"
         android:icon="@drawable/ic_location_on_black_24dp"
-        android:title="Account"/>
+        android:title="Location"/>
 
-    <item android:id="@+id/navigation_account"
-        android:icon="@drawable/ic_face_black_24dp"
-        android:title="Account"/>
+    <item android:id="@+id/navigation_massage"
+        android:icon="@drawable/ic_message_black_24dp"
+        android:title="Chat"/>
 
     <item android:id="@+id/navigation_phone"
         android:icon="@drawable/ic_phone_black_24dp"
         android:title="Phone"/>
 
-    <item android:id="@+id/navigation_massage"
-        android:icon="@drawable/ic_message_black_24dp"
-        android:title="Account"/>
+    <item android:id="@+id/navigation_menu"
+        android:icon="@drawable/ic_menu_black_24dp"
+        android:title="Menu"/>
 
 
 

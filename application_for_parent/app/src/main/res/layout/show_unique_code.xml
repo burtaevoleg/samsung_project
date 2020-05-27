@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-
         android:text=""
         android:textAlignment="center"
         android:textAllCaps="true"
@@ -20,8 +19,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text='Данный ккод предназначен для подключения телефона ребенка. Установите приложение " Приложение для ребенка" и введите этот уникальный код на теелфон ребенка.'
+        android:text='Данный код предназначен для подключения телефона ребенка. Установите приложение "Child" и введите этот код при регистрации на телефон ребенка.'
         android:gravity="center"
         android:textSize="20dp"/>
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:text="Дальше" />
 
 </LinearLayout>

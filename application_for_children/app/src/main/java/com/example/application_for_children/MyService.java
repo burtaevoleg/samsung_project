@@ -11,7 +11,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
+import android.icu.util.LocaleData;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,6 +28,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 import okhttp3.MediaType;
@@ -45,21 +51,16 @@ public class MyService extends Service {
     LocationManager locationManager;
     SharedPreferences sharedPreferences;
     String answerHTTP;
-    private String SERV_URL = "http://192.168.0.174:8080/person/getperson?id=3";
-    //"http://192.168.0.174:8080/";
+    String url_server;
+
 
 
     public void onCreate() {
         super.onCreate();
-
+        url_server=getString(R.string.url_server);
         Log.d(LOG_TAG, "onCreate");
     }
 
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        Log.d(LOG_TAG, "memory");
-    }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
@@ -89,22 +90,15 @@ public class MyService extends Service {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "My service", NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(notificationChannel);
 
-            Log.d(LOG_TAG, "start someTask");
-
             locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             locationListener = new LocationListener() {
-
                 @Override
                 public void onLocationChanged(Location location) {
-                    Log.d(LOG_TAG, "1");
                     if (location.getProvider().equals(
                             LocationManager.NETWORK_PROVIDER))
                         Status += 1;
-
-
                     showLocation(location);
                     new MyAsyncTask(location).execute("");
-
                 }
 
                 @Override
@@ -120,16 +114,12 @@ public class MyService extends Service {
                 }
 
                 @Override
-                public void onProviderDisabled(String provider) {
-                    Log.d(LOG_TAG, "4");
-                }
+                public void onProviderDisabled(String provider) {}
             };
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            }
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) { }
             locationManager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, 0, 0,
+                    LocationManager.NETWORK_PROVIDER, 1000*10, 5,
                     locationListener);
 
 
@@ -160,9 +150,9 @@ public class MyService extends Service {
                 LocationManager.NETWORK_PROVIDER)) {
             Log.d(LOG_TAG, "status = " + Status + "\n" + formatLocation(location));
         }
-        // else if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
+         //else if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
         //         tvLocationGPS.setText(formatLocation(location));
-        // }
+         //}
     }
 
 
@@ -196,28 +186,24 @@ public class MyService extends Service {
         protected String doInBackground(String... params) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-            /**RequestBody requsestBody = new MultipartBody.Builder()
-             .setType(MultipartBody.FORM)
-             .addFormDataPart("lastname", lastnameS)
-             .addFormDataPart("firstname", firstnameS)
-             .build();
-             **/
             OkHttpClient client = new OkHttpClient();
-            /**Request request = new Request.Builder()
-             .url(SERV_URL)
-             //.post(requsestBody)
-             .build();
-             **/
             MediaType mediaType = MediaType.parse("text/plain");
-            formatter = new SimpleDateFormat("YYYY.MM.dd");
+            formatter = new SimpleDateFormat("YYYY-MM-dd");
+
             //или new SimpleDateFormat("hh:mm:ss");
             // new SimpleDateFormat("dd.mm.yyyy HH:mm:ss a");
-            sharedPreferences=getSharedPreferences("preference",MODE_PRIVATE);
+            sharedPreferences=getSharedPreferences("child",MODE_PRIVATE);
             int ID=sharedPreferences.getInt("parent_id",MODE_PRIVATE);
+            Date dater=new Date(location.getTime());
             folderName = formatter.format(new Date(location.getTime()));
-            RequestBody body = RequestBody.create("{\n\t\"idperson\":" + ID + ",\n\t\"latitude\":" + latitude + ",\n\t\"longitude\":" + longitude + ",\n\t\"date\":" + folderName + ",\n\t\"time\":" + location.getTime() + "\n}", mediaType);
+            Timestamp timestamp = new Timestamp(dater.getTime());
+            Log.d(LOG_TAG,timestamp.toString());
+            Log.d(LOG_TAG, String.valueOf(ID));
+            String timezone=timestamp.toString();
+
+            RequestBody body = RequestBody.create("{\n\t\"idperson\":" + ID + ",\n\t\"latitude\":" + latitude + ",\n\t\"longitude\":" + longitude + ",\n\t\"timezone\":'" + timezone + "'\n}", mediaType);
             Request request = new Request.Builder()
-                    .url("http://192.168.0.175:8080/location/addLocation")
+                    .url(url_server+"/location/addLocation")
                     .method("PUT", body)
                     .addHeader("Content-Type", "text/plain")
                     .build();
@@ -242,8 +228,6 @@ public class MyService extends Service {
         @Override
         protected void onPostExecute (String result){
             super.onPostExecute(result);
-            //Log.d(LOG_TAG,answerHTTP);
-            //lastnameF.setText(answerHTTP);
         }
 
     }

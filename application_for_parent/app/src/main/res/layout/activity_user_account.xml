@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:label="Личный аккаунт"
+
+    tools:context=".User_account">
+
+    <TextView
+        android:id="@+id/parent_phone2"
+        android:layout_width="152dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:textSize="20dp"
+        android:text="Ваш телефон"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/parent_phone"
+        android:layout_width="212dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#1747DC"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/child_phone2"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="76dp"
+        android:text="Телефон ребенка: "
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/child_phone"
+        android:layout_width="215dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="76dp"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#1747DC"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="171dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="140dp"
+        android:text="Уникальный код"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/unique_code"
+        android:layout_width="211dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="140dp"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#1747DC"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

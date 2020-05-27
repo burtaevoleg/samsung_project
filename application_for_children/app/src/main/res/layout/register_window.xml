@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="Уникальный код"
-            android:inputType="text"
+            android:inputType="textCapCharacters"
             android:text=""
             android:textAlignment="center"
             android:textAllCaps="true"
@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='Данный ккод предназначен для подключения телефона ребенка. Установите приложение " Приложение для ребенка" и введите этот уникальный код на теелфон ребенка.'
+            android:text='Данный код предназначен для подключения вашего телефона к телефону родителя.'
             android:gravity="center"
             android:textSize="20dp"/>
 

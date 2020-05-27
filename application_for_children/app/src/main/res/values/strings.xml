@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">application_for_children</string>
+    <string name="app_name">Child</string>
+    <string name="url_server">https://serverforproject.herokuapp.com</string>
 </resources>

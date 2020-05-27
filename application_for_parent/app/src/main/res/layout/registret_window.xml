@@ -47,6 +47,25 @@
 
         </com.rengwuxian.materialedittext.MaterialEditText>
 
+        <TextView
+            android:id="@+id/exception"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Зарегистрироваться" />
+        </LinearLayout>
+
 
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>
